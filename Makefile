@@ -12,11 +12,12 @@ RIOTBASE ?= $(CURDIR)/../riot
 USEMODULE += shell
 USEMODULE += shell_commands
 USEMODULE += gnrc_txtsnd
-USEMODULE += gnrc_pktdump
+
 # net
-#USEMODULE += gnrc
+USEMODULE += gnrc
 USEMODULE += gnrc_netdev_default
 USEMODULE += auto_init_gnrc_netif
+USEMODULE += gnrc_pktdump
 
 
 
