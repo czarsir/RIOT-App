@@ -36,6 +36,7 @@ int show(int cnt, char **arg)
 	/* unused parameter */
 	cnt = sizeof(*arg);
 	
+	(void)cnt;
 	
 	printf("my show time ~\n");
 	

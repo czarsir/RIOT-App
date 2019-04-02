@@ -2,7 +2,7 @@
 APPLICATION = simple
 
 # Hardware
-BOARD ?= native
+BOARD ?= stm32f4discovery
 
 # OS path
 RIOTBASE ?= $(CURDIR)/../riot
@@ -11,12 +11,12 @@ RIOTBASE ?= $(CURDIR)/../riot
 # shell
 USEMODULE += shell
 USEMODULE += shell_commands
-USEMODULE += gnrc_txtsnd
-USEMODULE += gnrc_pktdump
+#USEMODULE += gnrc_txtsnd
+#USEMODULE += gnrc_pktdump
 # net
 #USEMODULE += gnrc
-USEMODULE += gnrc_netdev_default
-USEMODULE += auto_init_gnrc_netif
+#USEMODULE += gnrc_netdev_default
+#USEMODULE += auto_init_gnrc_netif
 
 
 
