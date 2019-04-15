@@ -1,8 +1,13 @@
 
+/*** Hardware ***/
+#include <board.h>
+
 /*** Base ***/
 #include <stdio.h>
+//#include <unistd.h>
 
 /*** Module ***/
+#include "xtimer.h"
 #include "shell.h"
 
 
@@ -25,8 +30,18 @@ int main(void)
     printf("Go:\n");
 	
 	/*** shell ***/
-    char line_buf[SHELL_DEFAULT_BUFSIZE];
-    shell_run(sh_cmd, line_buf, SHELL_DEFAULT_BUFSIZE);
+//    char line_buf[SHELL_DEFAULT_BUFSIZE];
+//    shell_run(sh_cmd, line_buf, SHELL_DEFAULT_BUFSIZE);
+	
+	/*** LED ***/
+	puts("It's a simple app!");
+	LED0_ON;
+	while(1)
+	{
+//		usleep(1000000);
+		xtimer_sleep(1);
+		LED0_TOGGLE;
+	}
 
     return 0;
 }
