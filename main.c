@@ -36,11 +36,17 @@ int main(void)
 	/*** LED ***/
 	puts("It's a simple app!");
 	LED0_ON;
+	LED1_OFF;
+	LED2_OFF;
+	LED3_OFF;
 	while(1)
 	{
 //		usleep(1000000);
 		xtimer_sleep(1);
 		LED0_TOGGLE;
+		LED1_TOGGLE;
+		LED2_TOGGLE;
+		LED3_TOGGLE;
 	}
 
     return 0;
