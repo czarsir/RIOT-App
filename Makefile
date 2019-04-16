@@ -25,6 +25,10 @@ USEMODULE += shell_commands
 #USEMODULE += gnrc_netdev_default
 #USEMODULE += auto_init_gnrc_netif
 
+# at86rf215
+USEMODULE += at86rf2xx
+#USEMODULE += at86rf215
+
 
 
 ### compile
