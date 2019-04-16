@@ -13,18 +13,27 @@
 #include "xtimer.h"
 #include "shell.h"
 
+/****** Macro ******/
+#define MAIN_QUEUE_SIZE     (8)
 
-/*** Variables ***/
+
+/*** Variables ************************************************/
+static msg_t _main_msg_queue[MAIN_QUEUE_SIZE];
 char rf_stack[THREAD_STACKSIZE_MAIN];
 
-/*** Functions ***/
+
+/*** Functions ************************************************/
 int show(int cnt, char **arg);
+extern int udp_send(int argc, char **argv);
+extern int udp_server(int argc, char **argv);
 /* threads */
 void *thread_handler_rf(void *arg);
 
 
 /*** Special Variables ***/
 const shell_command_t sh_cmd[] = {
+	{ "udp", "send udp packets", udp_send },
+	{ "udps", "start udp server", udp_server },
 	{"show", "Los geht's.", show},
 	{ NULL, NULL, NULL }
 };
@@ -34,6 +43,9 @@ const shell_command_t sh_cmd[] = {
 
 int main(void)
 {
+	int i = 10;
+	msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
+	
     puts("It's a simple app!");
 
 	/*** create thread for rf ***/
@@ -45,10 +57,6 @@ int main(void)
 
 	/*** main process ***/
     printf("Go:\n");
-
-	/*** shell ***/
-//    char line_buf[SHELL_DEFAULT_BUFSIZE];
-//    shell_run(sh_cmd, line_buf, SHELL_DEFAULT_BUFSIZE);
 	
 	/*** LED ***/
 	puts("It's a simple app!");
@@ -56,7 +64,7 @@ int main(void)
 	LED1_OFF;
 	LED2_OFF;
 	LED3_OFF;
-	while(1)
+	while(i--)
 	{
 //		usleep(1000000);
 		xtimer_sleep(1);
@@ -66,6 +74,10 @@ int main(void)
 		LED3_TOGGLE;
 	}
 
+	/*** shell ***/
+	char line_buf[SHELL_DEFAULT_BUFSIZE];
+	shell_run(sh_cmd, line_buf, SHELL_DEFAULT_BUFSIZE);
+	
     return 0;
 }
 
