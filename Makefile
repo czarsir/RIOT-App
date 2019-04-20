@@ -31,9 +31,10 @@ USEMODULE += gnrc_ipv6_default
 USEMODULE += gnrc_sock_udp
 
 # at86rf215
-USEMODULE += at86rf2xx
-#USEMODULE += at86rf215
+USEMODULE += at86rf215
 
+###### necessary (at86rf21% will be blocked.) ######
+NO_PSEUDOMODULES += at86rf215
 
 
 ### compile
