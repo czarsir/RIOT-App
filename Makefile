@@ -17,7 +17,7 @@ USEMODULE += xtimer
 # shell
 USEMODULE += shell
 USEMODULE += shell_commands
-#USEMODULE += gnrc_txtsnd
+USEMODULE += gnrc_txtsnd
 #USEMODULE += gnrc_pktdump
 
 ###### net
