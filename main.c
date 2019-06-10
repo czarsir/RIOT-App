@@ -9,6 +9,7 @@
 
 /*** System ***/
 #include "thread.h"
+#include "net/gnrc.h"
 
 /*** Module ***/
 #include "xtimer.h"
@@ -44,12 +45,12 @@ const shell_command_t sh_cmd[] = {
 	{"show", "Los geht's.", show},
 	{ NULL, NULL, NULL }
 };
-//static char *txtsnd[4] = {
-//	"txtsnd",
-//	"6",
-//	"10:10:64:2d:1a:08:11:3e",
-//	"dfdfdf"
-//};
+static char *txtsnd[4] = {
+	"txtsnd",
+	"6",
+	"10:10:64:2d:1a:08:11:3e",
+	"dfdfdf"
+};
 static char *udp_param[4] = {
 	"udp",
 	"fe80::1210:642d:1a08:113e",
@@ -129,9 +130,15 @@ void *thread_handler_send(void *arg)
 	while(1)
 	{
 		msg_receive(&m);
-		puts("Send one frame.");
+		//puts("Send one frame.");
 		//_gnrc_netif_send(4, txtsnd);
-		udp_send(4, udp_param);
+		(void)txtsnd;
+		//udp_send(4, udp_param);
+		(void)udp_param;
+
+		puts("InPhase test.");
+		netopt_enable_t enable = NETOPT_DISABLE;
+		gnrc_netapi_get(6, NETOPT_IS_CHANNEL_CLR, 0, &enable, sizeof(enable));
 
 		/*** debouncing ***/
 		xtimer_sleep(1);
