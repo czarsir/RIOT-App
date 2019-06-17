@@ -138,7 +138,7 @@ void *thread_handler_send(void *arg)
 
 		puts("InPhase test.");
 		netopt_enable_t enable = NETOPT_DISABLE;
-		gnrc_netapi_get(6, NETOPT_IS_CHANNEL_CLR, 0, &enable, sizeof(enable));
+		gnrc_netapi_get(6, NETOPT_IPS_START, 0, &enable, sizeof(enable));
 
 		/*** debouncing ***/
 		xtimer_sleep(1);
