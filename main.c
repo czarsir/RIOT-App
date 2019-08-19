@@ -2,6 +2,7 @@
 /*** Hardware ***/
 #include <board.h>
 #include "periph/gpio.h"
+#include "periph/uart.h"
 
 /*** Base ***/
 #include <stdio.h>
@@ -78,11 +79,18 @@ int main(void)
 	/*** Interrupt: blue Button ***/
 	gpio_init_int(GPIO_PIN(PORT_A, 0), GPIO_IN, GPIO_RISING, _isr_button, NULL);
 
+	/*** UART: UART_DEV(1) ***/
+	uint8_t bufByte='D';
+	bufByte = uart_init(UART_DEV(1), 115200, NULL, NULL);
+	//printf("uart_init: %u\n", bufByte);
+	bufByte='D';
+	uart_write(UART_DEV(1), (const uint8_t *)&bufByte, (size_t)1);
+
 	/*** main process ***/
     printf("Go:\n");
 	
 	/*** LED ***/
-	puts("It's a simple app!");
+	//puts("It's a simple app!");
 	LED0_ON;
 	LED1_OFF;
 	LED2_OFF;
@@ -109,7 +117,7 @@ void *thread_handler_rf(void *arg)
 	(void)arg;
 	msg_t m;
 
-	puts("--->>> Thread [rf] starts.");
+	//puts("--->>> Thread [rf] starts.");
 
 	while(1)
 	{
@@ -125,7 +133,7 @@ void *thread_handler_send(void *arg)
 	(void)arg;
 	msg_t m;
 
-	puts("--->>> Thread [send] starts.");
+	//puts("--->>> Thread [send] starts.");
 
 	while(1)
 	{
