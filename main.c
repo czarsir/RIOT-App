@@ -29,6 +29,7 @@ static kernel_pid_t pidSend;
 
 /*** Functions ************************************************/
 int show(int cnt, char **arg);
+int trigger(int cnt, char **arg);
 extern int _gnrc_netif_send(int argc, char **argv);
 extern int udp_send(int argc, char **argv);
 extern int udp_server(int argc, char **argv);
@@ -44,6 +45,7 @@ const shell_command_t sh_cmd[] = {
 	{ "udp", "send udp packets", udp_send },
 	{ "udps", "start udp server", udp_server },
 	{"show", "Los geht's.", show},
+	{"trigger", "trigger InPhase-System", trigger},
 	{ NULL, NULL, NULL }
 };
 static char *txtsnd[4] = {
@@ -176,4 +178,15 @@ int show(int cnt, char **arg)
 	printf("my show time ~\n");
 	
 	return 0;
+}
+
+int trigger(int cnt, char **arg)
+{
+	msg_t m;
+	cnt = sizeof(*arg);
+	(void)cnt;
+
+	msg_send(&m, pidSend);
+
+    return 0;
 }
