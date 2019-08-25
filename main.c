@@ -200,14 +200,20 @@ int freqloop(int cnt, char **arg)
 	cnt = sizeof(*arg);
 	(void)cnt;
 
+	char *data = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+
 	udp_param[1] = arg[1];
+//	udp_param[3] = data;
+	(void)data;
 
 	printf("freqloop: start\n");
 	for (channel=0; channel<100; channel++) {
 		gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
 		udp_send(4, udp_param);
+		xtimer_sleep(1);
 	}
 	printf("freqloop: stop\n");
+	xtimer_sleep(3);
 	channel = 0;
 	gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
 	udp_send(4, udp_param);
