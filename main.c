@@ -30,6 +30,7 @@ static kernel_pid_t pidSend;
 /*** Functions ************************************************/
 int show(int cnt, char **arg);
 int trigger(int cnt, char **arg);
+int freqloop(int cnt, char **arg);
 extern int _gnrc_netif_send(int argc, char **argv);
 extern int udp_send(int argc, char **argv);
 extern int udp_server(int argc, char **argv);
@@ -46,6 +47,7 @@ const shell_command_t sh_cmd[] = {
 	{ "udps", "start udp server", udp_server },
 	{"show", "Los geht's.", show},
 	{"trigger", "trigger InPhase-System", trigger},
+	{"freqloop", "loop of sending diff freq", freqloop},
 	{ NULL, NULL, NULL }
 };
 static char *txtsnd[4] = {
@@ -189,4 +191,27 @@ int trigger(int cnt, char **arg)
 	msg_send(&m, pidSend);
 
     return 0;
+}
+
+int freqloop(int cnt, char **arg)
+{
+	uint16_t channel;
+	/* unused parameter */
+	cnt = sizeof(*arg);
+	(void)cnt;
+
+	udp_param[1] = arg[1];
+
+	printf("freqloop: start\n");
+	for (channel=0; channel<100; channel++) {
+		gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
+		udp_send(4, udp_param);
+	}
+	printf("freqloop: stop\n");
+	channel = 0;
+	gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
+	udp_send(4, udp_param);
+	printf("freqloop: recheck\n");
+
+	return 0;
 }
