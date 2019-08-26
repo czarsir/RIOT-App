@@ -207,16 +207,18 @@ int freqloop(int cnt, char **arg)
 	(void)data;
 
 	printf("freqloop: start\n");
+
 	for (channel=0; channel<100; channel++) {
 		gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
 		udp_send(4, udp_param);
-		xtimer_sleep(1);
 	}
+
 	printf("freqloop: stop\n");
-	xtimer_sleep(3);
-	channel = 0;
+
+	channel = 26;
 	gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
 	udp_send(4, udp_param);
+
 	printf("freqloop: recheck\n");
 
 	return 0;
