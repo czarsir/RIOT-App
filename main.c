@@ -170,14 +170,34 @@ static void _isr_button(void *arg)
 	msg_send(&m, pidSend);
 }
 
+//extern void dingtest(void);
+//extern void dingpmu(void);
+//extern void dingpmustart(void);
+//extern void dingpmustop(void);
+
 int show(int cnt, char **arg)
 {
 	/* unused parameter */
-	cnt = sizeof(*arg);
+	(void)arg;
 	
-	(void)cnt;
-	
-	printf("my show time ~\n");
+	switch (cnt) {
+		case 1:
+//			printf("dingtest\n");
+//			dingtest();
+//			break;
+		case 2:
+//			printf("dingpmu\n");
+//			dingpmu();
+//			break;
+		case 3:
+//			dingpmustart();
+//			break;
+		case 4:
+//			dingpmustop();
+//			break;
+		default:
+			printf("my show time ~ %d\n", cnt);
+	}
 	
 	return 0;
 }
