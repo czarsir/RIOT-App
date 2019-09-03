@@ -18,6 +18,8 @@
 
 /****** Macro ******/
 #define MAIN_QUEUE_SIZE     (8)
+/*** Test ***/
+#define PMU_TEST
 
 
 /*** Variables ************************************************/
@@ -170,10 +172,12 @@ static void _isr_button(void *arg)
 	msg_send(&m, pidSend);
 }
 
-//extern void dingtest(void);
-//extern void dingpmu(void);
-//extern void dingpmustart(void);
-//extern void dingpmustop(void);
+#ifdef PMU_TEST
+extern void dingtest(void);
+extern void dingpmu(void);
+extern void dingpmustart(void);
+extern void dingpmustop(void);
+#endif
 
 int show(int cnt, char **arg)
 {
@@ -181,20 +185,22 @@ int show(int cnt, char **arg)
 	(void)arg;
 	
 	switch (cnt) {
+#ifdef PMU_TEST
 		case 1:
-//			printf("dingtest\n");
-//			dingtest();
-//			break;
+			printf("dingtest\n");
+			dingtest();
+			break;
 		case 2:
-//			printf("dingpmu\n");
-//			dingpmu();
-//			break;
+			printf("dingpmu\n");
+			dingpmu();
+			break;
 		case 3:
-//			dingpmustart();
-//			break;
+			dingpmustart();
+			break;
 		case 4:
-//			dingpmustop();
-//			break;
+			dingpmustop();
+			break;
+#endif
 		default:
 			printf("my show time ~ %d\n", cnt);
 	}
@@ -217,8 +223,14 @@ int freqloop(int cnt, char **arg)
 {
 	uint16_t channel;
 	/* unused parameter */
-	cnt = sizeof(*arg);
 	(void)cnt;
+
+	if (cnt == 3) {
+		channel = 0;
+		gnrc_netapi_set(6, NETOPT_CHANNEL, 0, &channel, sizeof(channel));
+		udp_send(4, udp_param);
+		return 0;
+	}
 
 	udp_param[1] = arg[1];
 	udp_param[3] = "0000000000000000";
