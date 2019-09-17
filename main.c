@@ -151,8 +151,12 @@ void *thread_handler_send(void *arg)
 		(void)udp_param;
 
 		puts("InPhase test.");
-		netopt_enable_t enable = NETOPT_DISABLE;
-		gnrc_netapi_get(6, NETOPT_IPS_START, 0, &enable, sizeof(enable));
+		for(int i=0; i<1; i++)
+		{
+			netopt_enable_t enable = NETOPT_DISABLE;
+			gnrc_netapi_get(6, NETOPT_IPS_START, 0, &enable, sizeof(enable));
+			//xtimer_sleep(10);
+		}
 
 		/*** debouncing ***/
 		xtimer_sleep(1);
