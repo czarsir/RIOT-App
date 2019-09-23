@@ -154,7 +154,7 @@ void *thread_handler_send(void *arg)
 		for(int i=0; i<1; i++)
 		{
 			netopt_enable_t enable = NETOPT_DISABLE;
-			gnrc_netapi_get(6, NETOPT_IPS_START, 0, &enable, sizeof(enable));
+			gnrc_netapi_get(7, NETOPT_IPS_START, 0, &enable, sizeof(enable));
 			//xtimer_sleep(10);
 		}
 
