@@ -19,7 +19,7 @@
 /****** Macro ******/
 #define MAIN_QUEUE_SIZE     (8)
 /*** Test ***/
-#define PMU_TEST
+//#define PMU_TEST
 
 
 /*** Variables ************************************************/
@@ -156,6 +156,14 @@ void *thread_handler_send(void *arg)
 			netopt_enable_t enable = NETOPT_DISABLE;
 			gnrc_netapi_get(7, NETOPT_IPS_START, 0, &enable, sizeof(enable));
 			//xtimer_sleep(10);
+			uint8_t ips_state = 9;
+			{
+				xtimer_sleep(3);
+				gnrc_netapi_get(7, NETOPT_IPS_STATE, 0, &ips_state, sizeof(ips_state));
+			} while (ips_state != 0);
+			int16_t rets = 0;
+			gnrc_netapi_get(7, NETOPT_IPS_RET, 0, &rets, sizeof(rets));
+			printf("InPhase: rets %d\n", rets);
 		}
 
 		/*** debouncing ***/
