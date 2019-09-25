@@ -157,9 +157,10 @@ void *thread_handler_send(void *arg)
 			gnrc_netapi_get(7, NETOPT_IPS_START, 0, &enable, sizeof(enable));
 			//xtimer_sleep(10);
 			uint8_t ips_state = 9;
-			{
+			do {
 				xtimer_sleep(3);
 				gnrc_netapi_get(7, NETOPT_IPS_STATE, 0, &ips_state, sizeof(ips_state));
+				printf("InPhase: state2 %d\n", ips_state);
 			} while (ips_state != 0);
 			int16_t rets = 0;
 			gnrc_netapi_get(7, NETOPT_IPS_RET, 0, &rets, sizeof(rets));
